@@ -33,3 +33,61 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+const getEmployeeType = () => {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "EmployeeType",
+            message: "Please select the employee Type",
+            choices: ["Intern", "Engineer", "Manager"]
+        }
+    ])
+}
+
+
+async function init() {
+    
+    const employeeType = await getEmployeeType();
+    selectUserType(employeeType);
+
+}
+
+async function selectUserType (data) {
+   // console.log (data.EmployeeType);
+    switch (data.EmployeeType) {
+        case ("Intern"):
+            console.log ("Intern Selected");
+            // We would call a function here to get our Intern data
+            break;
+        case ("Engineer"):
+            console.log ("Engineer Selected");
+            // We would call a function here to get our Engineer data
+            break;
+        case ("Manager"):
+            console.log ("Funt");
+            // We would call a function here to get our Manager data
+            break;
+        default:
+            // If we get here something broke in our list
+            console.log ("You get an F");
+            break;
+    }
+}
+
+async function createIntern () {
+
+}
+
+async function createEngineer () {
+
+}
+
+
+async function createManager () {
+
+}
+
+
+
+init();
