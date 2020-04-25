@@ -45,48 +45,82 @@ const getEmployeeType = () => {
     ])
 }
 
+async function createEmployee() {
+    console.log("Getting Employee Data in createEmployee");
+    const getEmployeeData = () => {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "Please enter the employee name: "
+            },
+            {
+                name: "id",
+                message: "Please enter the id number: "
+            }
+        ])
+    }
+}
+
+
+const getManagerData = () => {
+    console.log("Inside Create Manager Code!");
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "Please enter the employee name: "
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Please enter the id number: "
+        }
+
+    ])
+}
+
 
 async function init() {
-    
     const employeeType = await getEmployeeType();
     selectUserType(employeeType);
 
 }
 
-async function selectUserType (data) {
-   // console.log (data.EmployeeType);
+async function selectUserType(data) {
+    // console.log (data.EmployeeType);
     switch (data.EmployeeType) {
         case ("Intern"):
-            console.log ("Intern Selected");
+            console.log("Intern Selected");
+            createIntern();
             // We would call a function here to get our Intern data
             break;
         case ("Engineer"):
-            console.log ("Engineer Selected");
+            console.log("Engineer Selected");
             // We would call a function here to get our Engineer data
             break;
         case ("Manager"):
-            console.log ("Funt");
+            console.log("Manager Selected");
+            // createManager();
+            newUserManager = new getManagerData();
             // We would call a function here to get our Manager data
             break;
         default:
             // If we get here something broke in our list
-            console.log ("You get an F");
+            console.log("You get an F");
             break;
     }
 }
 
-async function createIntern () {
-
+async function createIntern() {
+    console.log("Creating an intern");
 }
 
-async function createEngineer () {
-
+async function createEngineer() {
+    console.log("Create an Engineer");
 }
 
 
-async function createManager () {
-
-}
 
 
 
