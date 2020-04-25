@@ -1,4 +1,4 @@
-const Manager = require("./lib/Manager");
+const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
@@ -9,7 +9,6 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -40,51 +39,14 @@ const getEmployeeType = () => {
             type: "list",
             name: "EmployeeType",
             message: "Please select the employee Type",
-            choices: ["Intern", "Engineer", "Manager"]
+            choices: ["Intern", "Engineer", "Manager", "Done"]
         }
     ])
 }
-
-async function createEmployee() {
-    console.log("Getting Employee Data in createEmployee");
-    const getEmployeeData = () => {
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Please enter the employee name: "
-            },
-            {
-                name: "id",
-                message: "Please enter the id number: "
-            }
-        ])
-    }
-}
-
-
-const getManagerData = () => {
-    console.log("Inside Create Manager Code!");
-    return inquirer.prompt([
-        {
-            type: "input",
-            name: "name",
-            message: "Please enter the employee name: "
-        },
-        {
-            type: "input",
-            name: "id",
-            message: "Please enter the id number: "
-        }
-
-    ])
-}
-
 
 async function init() {
     const employeeType = await getEmployeeType();
     selectUserType(employeeType);
-
 }
 
 async function selectUserType(data) {
@@ -101,9 +63,11 @@ async function selectUserType(data) {
             break;
         case ("Manager"):
             console.log("Manager Selected");
-            // createManager();
-            newUserManager = new getManagerData();
-            // We would call a function here to get our Manager data
+            createManager();
+            //console.log (myNewManager);
+            break;
+        case ("Done"):
+            console.log ("Done creating users, building page");
             break;
         default:
             // If we get here something broke in our list
