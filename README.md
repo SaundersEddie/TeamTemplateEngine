@@ -1,4 +1,4 @@
-﻿# Description
+﻿# Team Template Creator
 
 A small node cli executed script that will take user input to add members to a small team, then export the results in html.
 
@@ -7,6 +7,7 @@ A small node cli executed script that will take user input to add members to a s
 * [Build Status](#Build%20Status)
 * [Technology](#Code%20Style%20and%20Technology)
 * [Use](#Usage)
+* [Download](#Download)
 * [Credits](#Credits)
 * [Results](#Results)
 
@@ -32,6 +33,9 @@ TEAMTEMPLATEENGINE should be downloaded from git hub.<br/>
 NPM install should be executed from the CLI to add required packages.<br/>
 Run node app.js from the terminaal to execute the script.<br/>
 Open the team.html file in the browser to see the results.
+
+# Download
+https://github.com/SaundersEddie/TeamTemplateEngine
 
 # Credits
 Code study session - Travis Cultreri, Joy Chen
