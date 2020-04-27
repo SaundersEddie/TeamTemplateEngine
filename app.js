@@ -48,6 +48,10 @@ const getEmployeeType = () => {
     ])
 }
 
+const createTeam = () => {
+    console.log ("CreatingTeam");
+}
+
 const createManager = () => {
     console.log("Creating our Manager");
     return inquirer.prompt([{
@@ -74,8 +78,8 @@ const createManager = () => {
         const manager = new Manager(userInput.name, userInput.id, userInput.email, userInput.officeNumber)
         teamMembers.push(manager)
         //createTeam();
-        console.log(teamMembers)
-        console.log(manager);
+        //console.log(teamMembers)
+        //console.log(manager);
     })
 };
 
@@ -104,7 +108,7 @@ async function createIntern() {
         const intern = new Intern(userInput.name, userInput.id, userInput.email, userInput.school)
         teamMembers.push(intern)
         //createTeam();
-        console.log(teamMembers)
+        //console.log(teamMembers)
     });
 }
 
@@ -133,22 +137,21 @@ async function createEngineer() {
         const engineer = new Engineer(userInput.name, userInput.id, userInput.email, userInput.gitHub)
         teamMembers.push(engineer)
         //createTeam();
-        console.log(teamMembers)
+        //console.log(teamMembers)
     })
 }
 
-
-async function init() {
-    while (dataEntry) {
-        console.log (dataEntry);
-        const employeeType = await getEmployeeType();
-        await selectUserType(employeeType);
+const writeFile = () => {
+    console.log ("Writing File");
+    console.log (OUTPUT_DIR);
+    console.log (outputPath);
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
     }
-
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
 }
 
 
-// We need to keep looping this until the user selects done
 
 async function selectUserType(data) {
     switch (data.EmployeeType) {
@@ -167,10 +170,20 @@ async function selectUserType(data) {
         case ("Done"):
             console.log("Done creating users, building page");
             dataEntry = false;
+            writeFile();
             break;
         default:
             console.log("You get an F");
             dataEntry = false;
+    }
+}
+
+async function init() {
+    // We're going to loop this until the user selects done or an error occurs
+    while (dataEntry) {
+        console.log (dataEntry);
+        const employeeType = await getEmployeeType();
+        await selectUserType(employeeType);
     }
 }
 
