@@ -1,4 +1,4 @@
-const Manager = require("./lib/Manager.js");
+const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
@@ -9,6 +9,10 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+
+let dataEntry = true;
+// Here we create an additon array to store our team info
+const teamMembers = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -44,48 +48,130 @@ const getEmployeeType = () => {
     ])
 }
 
-async function init() {
-    const employeeType = await getEmployeeType();
-    selectUserType(employeeType);
-}
-
-async function selectUserType(data) {
-    // console.log (data.EmployeeType);
-    switch (data.EmployeeType) {
-        case ("Intern"):
-            console.log("Intern Selected");
-            createIntern();
-            // We would call a function here to get our Intern data
-            break;
-        case ("Engineer"):
-            console.log("Engineer Selected");
-            // We would call a function here to get our Engineer data
-            break;
-        case ("Manager"):
-            console.log("Manager Selected");
-            createManager();
-            //console.log (myNewManager);
-            break;
-        case ("Done"):
-            console.log ("Done creating users, building page");
-            break;
-        default:
-            // If we get here something broke in our list
-            console.log("You get an F");
-            break;
-    }
-}
+const createManager = () => {
+    console.log("Creating our Manager");
+    return inquirer.prompt([{
+        type: "input",
+        name: "name",
+        message: "What is your name?",
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is your employee id?",
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is your email?",
+    },
+    {
+        type: "input",
+        name: "officeNumber",
+        message: "What is your direct office number?",
+    },
+    ]).then((userInput) => {
+        const manager = new Manager(userInput.name, userInput.id, userInput.email, userInput.officeNumber)
+        teamMembers.push(manager)
+        //createTeam();
+        console.log(teamMembers)
+        console.log(manager);
+    })
+};
 
 async function createIntern() {
     console.log("Creating an intern");
+    return inquirer.prompt([{
+        type: "input",
+        name: "name",
+        message: "What is your name?",
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is your employee id?"
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is your email?"
+    },
+    {
+        type: "input",
+        name: "school",
+        message: "What school are you attending?"
+    }]).then((userInput) => {
+        const intern = new Intern(userInput.name, userInput.id, userInput.email, userInput.school)
+        teamMembers.push(intern)
+        //createTeam();
+        console.log(teamMembers)
+    });
 }
 
 async function createEngineer() {
     console.log("Create an Engineer");
+    return inquirer.prompt([{
+        type: "input",
+        name: "name",
+        message: "What is your name?",
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is your employee id?"
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is your email?"
+    },
+    {
+        type: "input",
+        name: "gitHub",
+        message: "What is your GitHub UserName?"
+    }]).then((userInput) => {
+        const engineer = new Engineer(userInput.name, userInput.id, userInput.email, userInput.gitHub)
+        teamMembers.push(engineer)
+        //createTeam();
+        console.log(teamMembers)
+    })
 }
 
 
+async function init() {
+    while (dataEntry) {
+        console.log (dataEntry);
+        const employeeType = await getEmployeeType();
+        await selectUserType(employeeType);
+    }
+
+}
 
 
+// We need to keep looping this until the user selects done
+
+async function selectUserType(data) {
+    switch (data.EmployeeType) {
+        case ("Intern"):
+            console.log("Intern Selected");
+            await createIntern();
+            break;
+        case ("Engineer"):
+            console.log("Engineer Selected");
+            await createEngineer();
+            break;
+        case ("Manager"):
+            console.log("Manager Selected");
+            await createManager();
+            break;
+        case ("Done"):
+            console.log("Done creating users, building page");
+            dataEntry = false;
+            break;
+        default:
+            console.log("You get an F");
+            dataEntry = false;
+    }
+}
 
 init();
