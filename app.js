@@ -14,28 +14,7 @@ let dataEntry = true;
 // Here we create an additon array to store our team info
 const teamMembers = [];
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// Main code to import user details and export
 
 const getEmployeeType = () => {
     return inquirer.prompt([
@@ -53,7 +32,6 @@ const createTeam = () => {
 }
 
 const createManager = () => {
-    console.log("Creating our Manager");
     return inquirer.prompt([{
         type: "input",
         name: "name",
@@ -77,14 +55,10 @@ const createManager = () => {
     ]).then((userInput) => {
         const manager = new Manager(userInput.name, userInput.id, userInput.email, userInput.officeNumber)
         teamMembers.push(manager)
-        //createTeam();
-        //console.log(teamMembers)
-        //console.log(manager);
     })
 };
 
 async function createIntern() {
-    console.log("Creating an intern");
     return inquirer.prompt([{
         type: "input",
         name: "name",
@@ -107,13 +81,10 @@ async function createIntern() {
     }]).then((userInput) => {
         const intern = new Intern(userInput.name, userInput.id, userInput.email, userInput.school)
         teamMembers.push(intern)
-        //createTeam();
-        //console.log(teamMembers)
     });
 }
 
 async function createEngineer() {
-    console.log("Create an Engineer");
     return inquirer.prompt([{
         type: "input",
         name: "name",
@@ -136,8 +107,6 @@ async function createEngineer() {
     }]).then((userInput) => {
         const engineer = new Engineer(userInput.name, userInput.id, userInput.email, userInput.gitHub)
         teamMembers.push(engineer)
-        //createTeam();
-        //console.log(teamMembers)
     })
 }
 
@@ -150,8 +119,6 @@ const writeFile = () => {
     }
     fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
 }
-
-
 
 async function selectUserType(data) {
     switch (data.EmployeeType) {
@@ -187,4 +154,5 @@ async function init() {
     }
 }
 
+// All variables and functions are created, now start the app.
 init();
